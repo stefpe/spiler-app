@@ -1,16 +1,24 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('layout') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-        {% block javascripts %}
-            {{ encore_entry_script_tags('layout') }}
-        {% endblock %}
-    </body>
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Spiler{% endblock %}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans|Russo+One"/>
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('layout') }}
+    {% endblock %}
+</head>
+<body>
+<div class="top-bar">
+    <div class="top-bar--title pl-2 logo--text">Spiler</div>
+    {#<div class="top-bar--content">#}
+        {#{% block body_header %}{% endblock %}#}
+    {#</div>#}
+</div>
+{% block body %}{% endblock %}
+{% block javascripts %}
+    {{ encore_entry_script_tags('layout') }}
+{% endblock %}
+</body>
 </html>

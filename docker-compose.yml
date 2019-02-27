@@ -1,0 +1,12 @@
+version: '3'
+services:
+  db:
+    image: "mysql/mysql-server:5.7"
+    network_mode: "bridge"
+    ports:
+      - "3306:3306"
+    environment:
+      - "MYSQL_ROOT_PASSWORD=!137849AWEkdk)(&%"
+      - "MYSQL_DATABASE=spiler"
+      - "MYSQL_USER=sp_rw"
+      - "MYSQL_PASSWORD=kl4526§!?TASDFgk234"

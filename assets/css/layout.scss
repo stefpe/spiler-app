@@ -18,6 +18,10 @@ body {
   background-color: #535b5e;
 }
 
+.blockquote-footer{
+  color: $white;
+}
+
 
 @import "components/logo";
 @import "components/login";

@@ -1,28 +1,27 @@
-{% extends 'AppBundle:dashboard:index.html.twig' %}
+{% extends 'dashboard/index.html.twig' %}
 
 {% block dashboard_body %}
 
-    {% include '@App/dashboard/content/header.html.twig' with {
+    {% include 'dashboard/content/header.html.twig' with {
         'title': 'Tracked Profile (' ~  profile.application.name ~ ')',
         'icon':'tachometer',
-        'description': 'Check the profile from '~ getAttribute(profile, 'created_string')
+        'description': 'Check the profile from '~ get_property(profile, 'created_string')
     } %}
 
-    {% include '@App/profile/detail_basic_info.html.twig' %}
+    {% include 'profile/detail_basic_info.html.twig' %}
 
-    {% include '@App/profile/detail_navigation.html.twig' %}
+    {% include 'profile/detail_navigation.html.twig' %}
 
     {% block post_navigation %}{% endblock %}
 
-    <div class="row expanded">
-        <div class="small-12 columns">
+
             {% block pre_visualization %}{% endblock %}
             <div id="visualization">{% block visualization %}{% endblock %}</div>
-        </div>
-    </div>
+
 {% endblock %}
 
 {% block javascripts %}
+    {{ parent() }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
     <script>
         window.data = JSON.parse('{{ profile.data|json_encode|raw }}'.replace(/\\/g, "\\\\"));

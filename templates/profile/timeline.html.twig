@@ -1,6 +1,7 @@
-{% extends 'AppBundle:profile:detail_base.html.twig' %}
+{% extends 'profile/detail_base.html.twig' %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.css"/>
     <style>
         .vis-timeline .vis-center {

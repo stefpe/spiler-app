@@ -1,11 +1,11 @@
-{% extends 'AppBundle:dashboard:index.html.twig' %}
+{% extends 'dashboard/index.html.twig' %}
 
 {% block dashboard_body %}
-    {% include '@App/dashboard/content/header.html.twig' with {
+    {% include 'dashboard/content/header.html.twig' with {
         'title': 'Profiles', 'icon':'code', 'description': 'Check your tracked profiles'
     } %}
 
-    {% include '@App/dashboard/content/table_panel.html.twig' with {
+    {% include 'dashboard/content/table_panel.html.twig' with {
         'title': 'Manage your profiles',
         'icon': 'list',
         'description': '',

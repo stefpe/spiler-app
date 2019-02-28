@@ -32,12 +32,12 @@
             {% for item in data %}
                 <tr>
                     {% for key in keys %}
-                        <td>{{ attribute(item,key) }}</td>
+                        <td>{{ get_property(item,key) }}</td>
                     {% endfor %}
                     {% if actions is defined %}
                         <td class="text-right">
                             {% for action in actions %}
-                                <a href="">
+                                <a href="{{ path(action.path, { 'id': item.id }) }}">
                                     <span class="fa fa-{{ action.icon }}"></span>
                                 </a>
                             {% endfor %}

@@ -16,58 +16,60 @@
 {% endblock %}
 
 {% block body %}
-
     <div class="row">
-
         {% include 'dashboard/navigation/sidebar_navigation.html.twig' with {
             'navigation': [
                 {'path':'backend_dashboard', 'title': 'Overview', 'icon': 'home', 'ctrl': 'DashboardController'},
-                {'path':'apps_index', 'title': 'Applications', 'icon': 'rocket', 'ctrl': 'ApplicationController'},
+                {'path':'backend_apps_index', 'title': 'Applications', 'icon': 'rocket', 'ctrl': 'ApplicationController'},
                 {'path':'profile_index', 'title': 'Profiles', 'icon': 'code', 'ctrl': 'ProfileController'},
                 {'path':'', 'title': 'User Settings', 'icon': 'user', 'ctrl': 'UserController'}
             ]
         } %}
 
         <div class="main col-9 ml-sm-auto col-lg-10 pt-3 px-4">
-            {% include 'dashboard/content/header.html.twig' with {
-            'title': 'Overview', 'icon':'dashboard', 'description': 'Lets have a look at your Spiler statistic'
-            } %}
+            {% block dashboard_body %}
 
-            <div class="row">
-                <div class="col-6">
-                    {% include 'dashboard/content/progress_panel.html.twig' with {
-                        'title': 'Your Applications',
-                        'icon': 'rocket',
-                        'description':'Number of configured Applications',
-                        'value': applicationCnt,
-                        'max': 5
-                    } %}
-                </div>
-                <div class="col-6">
-                    {% include 'dashboard/content/counter_panel.html.twig' with {
-                        'title': 'Tracked Profiles',
-                        'icon': 'code',
-                        'description': ('Number of tracked profiles in Month: ' ~ currentMonth),
-                        'count': profilesCnt
-                    } %}
-                </div>
-            </div>
 
-            <div class="row">
-                <div class="col-12">
-                    {% include 'dashboard/content/table_panel.html.twig' with {
-                        'title': 'Last recent profiles',
-                        'icon': 'clock-o',
-                        'description': '',
-                        'header': ['Date','Type', 'Application'],
-                        'data': recentProfiles,
-                        'keys': ['created_string', 'type', 'application.name'],
-                        'actions': [
-                            {'key':'show', 'path': 'profile_show', 'icon': 'bolt'}
-                        ]
-                    } %}
+                {% include 'dashboard/content/header.html.twig' with {
+                    'title': 'Overview', 'icon':'dashboard', 'description': 'Lets have a look at your Spiler statistic'
+                } %}
+
+                <div class="row">
+                    <div class="col-6">
+                        {% include 'dashboard/content/progress_panel.html.twig' with {
+                            'title': 'Your applications',
+                            'icon': 'rocket',
+                            'description':'Number of configured applications',
+                            'value': applicationCnt,
+                            'max': 5
+                        } %}
+                    </div>
+                    <div class="col-6">
+                        {% include 'dashboard/content/counter_panel.html.twig' with {
+                            'title': 'Tracked Profiles',
+                            'icon': 'code',
+                            'description': ('Number of tracked profiles in ' ~ currentMonth),
+                            'count': profilesCnt
+                        } %}
+                    </div>
                 </div>
-            </div>
+
+                <div class="row">
+                    <div class="col-12">
+                        {% include 'dashboard/content/table_panel.html.twig' with {
+                            'title': 'Last profiles',
+                            'icon': 'clock-o',
+                            'description': '',
+                            'header': ['Date','Type', 'Application'],
+                            'data': recentProfiles,
+                            'keys': ['created_string', 'type', 'application.name'],
+                            'actions': [
+                                {'key':'show', 'path': 'profile_show', 'icon': 'bolt'}
+                            ]
+                        } %}
+                    </div>
+                </div>
+            {% endblock %}
         </div>
     </div>
 

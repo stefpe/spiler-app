@@ -1,0 +1,15 @@
+<nav class="col-md-2 d-none d-md-block sidebar">
+    <div class="sidebar-sticky">
+        <ul class="nav flex-column">
+            {% for item in navigation %}
+                <li class="nav-item">
+                    <a href="" class="nav-link{% if item.ctrl in app.request.get('_controller') %} active{% endif %}">
+                    <span class="fa fa-{{ item.icon }}"></span> {{ item.title }}
+                    </a>
+                    {#<a {% if item.path is not empty %}href="{{ path(item.path) }}"{% endif %}>#}
+                    {#</a>#}
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,21 @@
+<div class="panel">
+    <div class="panel--heading">
+        <h3 class="panel--title">{% if icon is defined %}<span class="fa fa-{{ icon }}"></span> {% endif %}{{ title }}
+        </h3>
+    </div>
+
+    <div class="panel--body">
+        <div class="row">
+            <div class="col-6 columns">
+                <div class="stat" ><span class="fa fa-line-chart"></span> {{ count }}</div>
+            </div>
+            <div class="col-6 columns">
+                <p style="margin: 0; text-align: justify;">{{ description }}</p>
+            </div>
+        </div>
+    </div>
+
+    {% if footer is defined %}
+        <div class="panel--footer">{{ footer }}</div>
+    {% endif %}
+</div>

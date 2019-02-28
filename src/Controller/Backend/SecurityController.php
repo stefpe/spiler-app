@@ -1,16 +1,20 @@
 <?php
 
-namespace App\Controller;
+namespace App\Controller\Backend;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
+/**
+ * Class SecurityController
+ * @package App\Controller\Backend
+ */
 class SecurityController extends AbstractController
 {
     /**
-     * @Route("/login", name="app_login")
+     * @Route("/backend/login", name="backend_login", methods={"GET","POST"})
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -20,5 +24,14 @@ class SecurityController extends AbstractController
         $lastUsername = $authenticationUtils->getLastUsername();
 
         return $this->render('security/login.html.twig', ['last_username' => $lastUsername, 'error' => $error]);
+    }
+
+    /**
+     * @Route("/backend/logout", name="backend_logout", methods={"GET"})
+     * @throws \Exception
+     */
+    public function logout()
+    {
+        throw new \Exception('will be intercepted by guard authenticator before');
     }
 }

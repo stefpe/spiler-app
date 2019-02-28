@@ -1,0 +1,56 @@
+<div class="panel">
+    <div class="panel--heading">
+        <div class="row">
+            <div class="col-6 columns">
+                <h3 class="panel--title">
+                    {% if icon is defined %}<span class="fa fa-{{ icon }}"></span> {% endif %}{{ title }}
+                </h3>
+            </div>
+            <div class="col-6 columns text-right">
+                {% if topActions is defined %}
+                    {% for topAction in topActions %}
+                        <a class="button small" href="{{ path(topAction.path) }}">{{ topAction.key }}</a>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="panel--body">
+        <table class="table">
+            <thead>
+            <tr>
+                {% for col in header %}
+                    <th>{{ col }}</th>
+                {% endfor %}
+                {% if actions is defined %}
+                    <th class="text-right">Actions</th>
+                {% endif %}
+            </tr>
+            </thead>
+            <tbody>
+            {% for item in data %}
+                <tr>
+                    {% for key in keys %}
+                        <td>{{ attribute(item,key) }}</td>
+                    {% endfor %}
+                    {% if actions is defined %}
+                        <td class="text-right">
+                            {% for action in actions %}
+                                <a href="">
+                                    <span class="fa fa-{{ action.icon }}"></span>
+                                </a>
+                            {% endfor %}
+                        </td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+
+    {% if footer is defined %}
+        <div class="panel--footer">{{ footer }}</div>
+    {% endif %}
+</div>

@@ -1,25 +1,17 @@
 <?php declare(strict_types=1);
-/**
- * Created by PhpStorm.
- * User: stefan
- * Date: 2019-02-27
- * Time: 17:19
- */
 
 namespace App\Controller\Backend;
 
-
 use App\Entity\Application;
 use App\Repository\ProfileRepository;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
-
 
 /**
  * Class DashboardController
  * @package App\Controller\Backend
  */
-class DashboardController
+class DashboardController extends AbstractController
 {
     /**
      * @var ProfileRepository;
@@ -35,9 +27,8 @@ class DashboardController
         $this->profileRepository = $profileRepository;
     }
 
-
     /**
-     * @Route("/dashboard", name="backend_dashboard", methods={"GET"})
+     * @Route("/backend/dashboard", name="backend_dashboard", methods={"GET"})
      */
     public function indexAction()
     {
@@ -52,7 +43,7 @@ class DashboardController
             ->getQuery()
             ->execute();
 
-        return $this->render('AppBundle:dashboard:index.html.twig', [
+        return $this->render('dashboard/index.html.twig', [
             'applicationCnt' => count($applications),
             'profilesCnt' => $cntProfiles,
             'recentProfiles' => $recentProfiles,

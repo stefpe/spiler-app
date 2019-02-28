@@ -10,13 +10,10 @@
     {% endblock %}
 </head>
 <body>
-<div class="top-bar">
-    <div class="top-bar--title pl-2 logo--text">Spiler</div>
-    {#<div class="top-bar--content">#}
-        {#{% block body_header %}{% endblock %}#}
-    {#</div>#}
+{% block body_header %}{% endblock %}
+<div class="container-fluid">
+    {% block body %}{% endblock %}
 </div>
-{% block body %}{% endblock %}
 {% block javascripts %}
     {{ encore_entry_script_tags('layout') }}
 {% endblock %}

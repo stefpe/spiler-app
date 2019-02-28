@@ -1,0 +1,374 @@
+{% extends 'AppBundle:profile:detail_base.html.twig' %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.css"/>
+    <style>
+        .vis-timeline .vis-center {
+            border-top: 1px solid #888D8E;
+            border-left: none;
+        }
+
+        .vis-timeline .vis-left {
+            border-color: transparent;
+            border-top: 1px solid #888D8E;
+            border-right: 1px solid #3f4649;
+            width: 230px;
+        }
+
+        .vis-timeline .vis-top {
+            border-left: none;
+        }
+
+        .vis-timeline .vis-content .vis-label {
+            border-color: #3f4649;
+            text-align: right;
+        }
+
+        .vis-timeline .vis-content .vis-group {
+            border-color: #424b4f;
+        }
+
+        .vis-timeline {
+            border: 1px solid #33393c;
+            font-size: 12pt;
+            /*background: #4b5357;*/
+        }
+
+        .vis-item {
+            border: 1px solid #3f4649;
+            background-color: #1779ba;
+            font-size: 16px;
+            color: #ffffff;
+        }
+        .vis-box{
+            height: 26px;
+            width: 8px;
+            margin-left: 4px;/*start point needs to be the left outer border*/
+        }
+
+        .vis-dot{
+            display: none;
+        }
+        .vis-line.vis-readonly{
+            display: none;
+        }
+
+        .vis-left .vis-label {
+            color: #ffffff;
+            border-bottom: 1px solid;
+            font-size: 0.75rem;
+            overflow: hidden;
+            -ms-text-overflow: ellipsis;
+            text-overflow: ellipsis;
+            direction: rtl;
+            line-height: 2.5;
+        }
+
+        .vis-labelset {
+            border-right: none;
+        }
+
+        .vis-item,
+        .vis-item.vis-line {
+            border-width: 1px;
+        }
+
+        .vis-item.vis-dot {
+            border-width: 10px;
+            border-radius: 10px;
+        }
+
+        .vis-item.vis-selected {
+            border-color: green;
+            background-color: lightgreen;
+        }
+
+        .vis-time-axis .vis-text {
+            color: #ffffff;
+            padding-top: 10px;
+            padding-left: 10px;
+        }
+
+        .vis-time-axis .vis-grid.vis-minor {
+            border-width: 1px;
+            border-color: #3F4649;
+        }
+
+        .timeline__detailsbox{
+            z-index:10000;
+            display:none;
+            position:absolute;
+            width:450px;
+            background-color:#292d2f;
+            color:#ffffff;
+        }
+        .timeline__detailsbox h5{
+            direction:rtl;
+            overflow:hidden;
+            text-overflow: ellipsis;
+            width:90%;
+            text-align: left;
+        }
+
+        .timeline__actions{
+            width: 50px;
+        }
+
+        .framework{
+            background-color: #0a0a0a;
+        }
+
+        .event{
+            background-color: #ffae00;
+        }
+
+        .rendering{
+            background-color: #3adb76;
+        }
+
+        .database{
+            background-color: #cc4b37;
+        }
+
+        .controller{
+            background-color: #87CBE6;
+        }
+
+        .timeline__legend{
+            margin-right: 80px;
+            margin-bottom: 5px;
+        }
+
+        .timeline__legend-name{
+            margin-right: 15px;
+        }
+    </style>
+
+
+{% endblock %}
+
+{% block post_navigation %}
+    <div class="clearfix timeline__legend">
+        <div class="float-right">
+            <div class="framework float-left" style="width:20px; height: 20px;"></div>
+            <div class="float-left timeline__legend-name">&nbsp;Framework</div>
+            <div class="event float-left" style="width:20px; height: 20px;"></div>
+            <div class="float-left timeline__legend-name">&nbsp;Event</div>
+            <div class="rendering float-left" style="width:20px; height: 20px;"></div>
+            <div class="float-left timeline__legend-name">&nbsp;Rendering</div>
+            <div class="controller float-left" style="width:20px; height: 20px;"></div>
+            <div class="float-left timeline__legend-name">&nbsp;Controller</div>
+            <div class="database float-left" style="width:20px; height: 20px;"></div>
+            <div class="float-left timeline__legend-name">&nbsp;Database</div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block pre_visualization %}
+    <div class="small button-group float-right stacked timeline__actions">
+        <a class="button" id="zoomIn"><i class="fa fa-search-plus"></i></a>
+        <a class="button" id="zoomOut"><i class="fa fa-search-minus"></i></a>
+        <a class="button" id="timelineFocus"><i class="fa fa-crosshairs"></i></a>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.js"></script>
+    <script type="text/javascript">
+        //remove the base time to start at 0
+        var timeBase = -1;
+
+        /**
+         * Format milliseconds for timeline.
+         *
+         */
+        function getFormattedTime(milli){
+            return moment(milli).format('YYYY-MM-DDTHH:mm:ss.SSS');
+        }
+
+        function getRelativeTime(mics){
+            return (mics - timeBase)/1000 + ' ms';
+        }
+
+        function getTableDetails(data){
+            if(!data.hasOwnProperty('detail_info')){
+                return '';
+            }
+
+            var result = '';
+            for(var i in data.detail_info){
+                result += '<tr><td>'+i+'</td><td>'+data.detail_info[i]+'</td></tr>';
+            }
+
+            return result;
+        }
+
+        /**
+         * Create an profiling item
+         * @param id
+         * @param startTime
+         * @param stopTime
+         * @param data
+         * @returns object
+         */
+        function createTimelineItem(id, startTime, stopTime, data) {
+
+            if(timeBase === -1){
+                timeBase = startTime;
+            }
+
+            startTime = (startTime - timeBase)/1000;
+            stopTime = (stopTime - timeBase)/1000;
+
+            var diff = stopTime - startTime;
+            var itemDisplayType = 'range';
+            if(diff < 5){
+                itemDisplayType = 'box';
+            }
+
+            return {
+                id: id,
+                group: id,
+                start: getFormattedTime(startTime),
+                end: getFormattedTime(stopTime),
+                type: itemDisplayType,
+                data: data,
+                className: (data != null && data.hasOwnProperty('scl')) ? data['scl'] : ''
+            }
+        }
+
+        // DOM element where the Timeline will be attached
+        var container = document.getElementById('visualization');
+
+        var groups = new vis.DataSet();
+        var groupIdHashmap = {};
+        var items = new vis.DataSet();
+
+        groups.add([{
+            id: 0,
+            content: '<strong>{{ profile.application.name }}</strong>'
+        }]);
+
+        items.add([
+            createTimelineItem(0, data['st'], data['et'], null)
+        ]);
+
+        for (var i = 1, len = data.cs.length; i <= len; i++) {
+
+            var functionName = data.cs[i - 1]['fc'];
+
+            var item = createTimelineItem(
+                i,
+                data.cs[i - 1]['st'],
+                data.cs[i - 1]['et'],
+                data.cs[i - 1]
+            );
+            //add new group
+            if(!groupIdHashmap.hasOwnProperty(functionName)){
+                groupIdHashmap[functionName] = i;
+                groups.add([
+                    {
+                        id: i,
+                        content: functionName
+                    }
+                ]);
+            }
+
+            item.group = groupIdHashmap[functionName];
+            items.add([item]);
+        }//end loop
+
+
+        // Configuration for the Timeline
+        var options = {
+            stack: false,
+            orientation: 'top',
+            margin: {
+                item: 10, // minimal margin between items
+                axis: 5   // minimal margin between items and the axis
+            },
+            timeAxis: {step: 5},
+            min: getFormattedTime(0),
+            //max: '1970-01-01T00:01:00.000Z',
+            start: getFormattedTime(0),
+            showMajorLabels: false,
+            showCurrentTime: false,
+            zoomMax: 60000,
+            zoomMin: 5,
+            //zoomable: false,
+            selectable: false,
+            maxHeight: 600,
+            zoomKey: 'ctrlKey',
+            format: {
+                minorLabels: function (date, scale, step) {
+                    var secs = date.seconds();
+                    if (secs > 0) {
+                        return date.format('ss,SSS') + ' s';
+                    }
+                    return date.milliseconds() + ' ms';
+                }
+            },
+            groupOrder: function (a, b) {
+                return a.id - b.id;
+            },
+            verticalScroll: true
+        };
+
+        var timeline = new vis.Timeline(container, items, groups, options);
+
+        var detailsBox = document.createElement("div");
+        detailsBox.setAttribute('class', 'callout timeline__detailsbox');
+        container.insertBefore(detailsBox, container.firstChild);
+
+        //show details on click
+        timeline.on('click', function (properties) {
+            if(properties.item === null ||properties.item === 0){
+                detailsBox.style.display = 'none';
+                return;
+            }
+
+            var func = items.get(properties.item);
+            detailsBox.style.display = 'block';
+
+            detailsBox.innerHTML = '<h5>'+
+                func.data.fc+'</h5>\n' +
+                '<table class="stack">\n' +
+                '<thead>\n' +
+                '</thead>\n' +
+                '<tbody>\n' +
+                '<tr>\n' +
+                '<td>Memory usage</td>\n' +
+                '<td>'+formatMemory(func.data.mu)+'</td>\n' +
+                '</tr>\n' +
+                '<tr>\n' +
+                '<td>Wall time</td>\n' +
+                '<td>'+diffTime(func.data)+' ms</td>\n' +
+                '</tr>\n' + getTableDetails(func.data) +
+                '<tr>\n' +
+                '<td>Start time</td>\n' +
+                '<td>'+getRelativeTime(func.data.st)+'</td>\n' +
+                '</tr>\n' +
+                '<tr>\n' +
+                '<td>Stop time</td>\n' +
+                '<td>'+getRelativeTime(func.data.et)+'</td>\n' +
+                '</tr>\n' +
+                '</tbody>\n' +
+                '</table>\n' +
+                '  <button onclick="this.parentElement.style.display=\'none\';" class="close-button" aria-label="Dismiss alert" type="button" data-close>\n' +
+                '    <span aria-hidden="true">&times;</span>\n' +
+                '  </button>';
+        });
+
+
+        document.getElementById('zoomIn').onclick = function () {
+            timeline.zoomIn(0.5);
+        };
+        document.getElementById('zoomOut').onclick = function () {
+            timeline.zoomOut(0.5);
+        };
+        document.getElementById('timelineFocus').onclick = function(){
+            timeline.fit();
+        };
+    </script>
+{% endblock %}

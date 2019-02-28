@@ -1,0 +1,47 @@
+.panel {
+  background: #4b5357;
+  border-radius: 0;
+  border: 1px solid #33393c;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 1px rgba(0, 0, 0, .05);
+
+  .progress{
+    background: #656e71;
+    height: 20px;
+    margin: 6px 0;
+  }
+}
+
+.panel--heading {
+  background: #42494c;
+  border-color: #33393c;
+  color: #fff;
+}
+
+.panel--heading .button{
+  margin: 0;
+  opacity: 1;
+}
+
+.panel--title {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 16px;
+  line-height: 2;
+}
+
+.panel--heading {
+  padding: 10px 15px;
+  border-bottom: 1px solid transparent;
+}
+
+.panel--body {
+  padding: 15px;
+}
+
+.panel--footer {
+  background: #444b4f;
+  border-top: #33393c;
+  padding: 10px 15px;
+}
+

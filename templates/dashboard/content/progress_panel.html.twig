@@ -1,0 +1,18 @@
+<div class="panel">
+    <div class="panel--heading">
+        <h3 class="panel--title">{% if icon is defined %}<span class="fa fa-{{ icon }}"></span> {% endif %}{{ title }}</h3>
+    </div>
+
+    <div class="panel--body">
+        <div>{{ description }} <span class="pull-right">{{ value }}/{{ max }}</span></div>
+        <div class="progress">
+            <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ value/(max/100) }}%">
+                {{ value }}/{{ max }}
+            </div>
+        </div>
+    </div>
+
+    {% if footer is defined %}
+        <div class="panel--footer">{{ footer }}</div>
+    {% endif %}
+</div>

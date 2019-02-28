@@ -1,0 +1,21 @@
+{% extends 'AppBundle:dashboard:index.html.twig' %}
+
+{% block dashboard_body %}
+    {% include '@App/dashboard/content/header.html.twig' with {
+    'title': 'Applications', 'icon':'rocket', 'description': 'Check your applications, that you want to profile.'
+    } %}
+
+    {% include '@App/dashboard/content/table_panel.html.twig' with {
+    'title': 'Manage your applications',
+    'icon': 'list',
+    'description': '',
+    'topActions': [{'key':'New Application', 'path':'apps_new'}],
+    'header': ['#ID', 'Name', 'Api key'],
+    'data': applications,
+    'keys': ['id', 'name', 'apiKey'],
+    'actions': [
+        {'key':'edit', 'path': 'apps_edit', 'icon': 'pencil-square-o'},
+        {'path':'apps_delete','icon':'trash-o'}
+                ]
+    } %}
+{% endblock %}

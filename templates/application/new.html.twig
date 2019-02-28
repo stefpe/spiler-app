@@ -1,0 +1,16 @@
+{% extends 'AppBundle:dashboard:index.html.twig' %}
+
+{% block dashboard_body %}
+
+    {% include '@App/dashboard/content/header.html.twig' with {
+    'title': 'Applications', 'icon':'rocket', 'description': 'Create a new application'
+    } %}
+
+    {% include '@App/dashboard/content/form_panel.html.twig' with {
+        'title': 'New Application',
+        'buttonTitle': 'Create',
+        'topActions': [
+            {'key':' Back', 'path': 'apps_index', 'icon': 'arrow-left'}
+        ]
+    } %}
+{% endblock %}

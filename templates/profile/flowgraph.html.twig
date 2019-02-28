@@ -1,0 +1,120 @@
+{% extends 'AppBundle:profile:detail_base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        #visualization {
+            width: 100%;
+            border: 1px solid #33393c;
+            height:100vh;
+        }
+
+        .node rect,
+        .node circle,
+        .node ellipse {
+            stroke: #333;
+            fill: #fff;
+            stroke-width: 1px;
+        }
+
+        .edgePath path {
+            stroke: #fff;
+            fill: #fff;
+            stroke-width: 1.5px;
+        }
+    </style>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.20.0/vis.min.js"></script>
+    <script type="text/javascript">
+        var nodes = [];
+        var edges = [];
+        var multicalls = {};
+
+        var level = 0;
+
+        nodes.push({
+            id: 0,
+            label: '{{ profile.application.name }}\n'+ diffTime(data) + ' ms',
+            level: level,
+            margin: {top: 10, right: 10, bottom: 10, left: 10},
+            color: {background:'#1779ba', border: '#33393c'},
+            font: {color:'#ffffff'}
+        });
+
+        for (var i = 1, len = data.cs.length; i <= len; i++) {
+
+            var from = 0;
+
+            var item = data.cs[i - 1];
+
+            if (item.hasOwnProperty('pi')) {
+                from = item['pi'] + 1;
+            }
+
+            var time = diffTime(item);
+
+            if(time < 10){
+                continue;
+            }
+
+            //multicalls[from+item['fc']]=[i,1];
+
+            edges.push({
+                from: from,
+                to: i,
+                arrows: 'to',
+                label: '1 x',
+                color:{color:'#24a6fd'},
+                font: {strokeWidth: 0, color: '#ffffff'}
+            });
+
+            nodes.push({
+                id: i,
+                label: item['fc'].substring(item['fc'].lastIndexOf("\\") + 1) + '\n'+time + ' ms',
+                level: item['cl'] + 1,
+                margin: {top: 10, right: 10, bottom: 10, left: 10},
+                color: {background:'#1779ba', border: '#33393c'},
+                font: {color:'#ffffff'},
+                time: time,
+                memory: item['mu']
+            });
+        }
+
+        // create a network
+        var container = document.getElementById('visualization');
+        var dataset = {
+            nodes: nodes,
+            edges: edges
+        };
+
+        var options = {
+            height: '100%',
+            width: '100%',
+            nodes: {
+                shape: 'box'
+            },
+            edges:{
+                smooth: {
+                    type: 'horizontal'
+                }
+            },
+            layout: {
+                hierarchical: {
+                    direction: 'UD',
+                    enabled: true,
+                    blockShifting: false,
+                    edgeMinimization: false,
+                    //sortMethod: "directed"
+                }
+            },
+            physics: false
+        };
+
+        var network = new vis.Network(container, dataset, options);
+    </script>
+{% endblock %}

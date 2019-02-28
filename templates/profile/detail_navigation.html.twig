@@ -1,0 +1,15 @@
+<div class="row expanded">
+    <div class="small-12 columns">
+        <ul class="menu">
+            <li {% if type == 'timeline' %}class="active"{% endif %}>
+                <a href="{{ path('profile_show', {'id': profile.id}) }}"><i class="fa fa-clock-o"></i>Timeline</a>
+            </li>
+            <li {% if type == 'flowgraph' %}class="active"{% endif %}>
+                <a href="{{ path('profile_show', {'id': profile.id, 'type': 'flowgraph'}) }}"><i class="fa fa-list"></i>Flowgraph</a>
+            </li>
+            <li {% if type == 'upsdowns' %}class="active"{% endif %}>
+                <a href="{{ path('profile_show', {'id': profile.id, 'type': 'upsdowns'}) }}"><i class="fa fa-star-half-o"></i>Ups&amp;Downs</a>
+            </li>
+        </ul>
+    </div>
+</div>

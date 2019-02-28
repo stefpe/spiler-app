@@ -1,0 +1,11 @@
+<div class="panel">
+    <div class="panel-heading">
+        <h3 class="panel-title">{{ title }}</h3>
+    </div>
+    <div class="panel-body">
+        {{ content }}
+    </div>
+    {% if footer is defined %}
+    <div class="panel-footer">{{ footer }}</div>
+    {% endif %}
+</div>

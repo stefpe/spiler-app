@@ -1,7 +1,17 @@
-<ul class="menu detail-infobar">
-    <li><a title="Script Time" href="#"><i class="fa fa-tachometer"></i> {{ (profile.data.et - profile.data.st)/1000 }} ms</a></li>
-    <li><a title="CPU Time" href="#"><i class="fa fa-calculator"></i> {{ (profile.data.ct/1000) }} ms</a></li>
-    <li><a title="SAPI Type" href="#"><i class="fa fa-server"></i> {{ profile.data.sn|upper }}</a></li>
-    <li><a title="Framework" href="#"><i class="fa fa-file-code-o"></i> {{ profile.application.displayPreset.name }}</a></li>
-    <li><a title="Start File: {{ profile.data.fn }}" href="#"><i class="fa fa-file"></i> {{ profile.data.fn|slice(-40) }}</a></li>
+<ul class="profile--info-bar list-group list-group-horizontal-xl my-5">
+    <li class="list-group-item">
+        <i class="fa fa-tachometer"></i> {{ (profile.data.et - profile.data.st)/1000 }} ms
+    </li>
+    <li class="list-group-item">
+        <i class="fa fa-calculator"></i> {{ (profile.data.ct/1000) }} ms
+    </li>
+    <li class="list-group-item">
+        <i class="fa fa-server"></i> {{ profile.data.sn|upper }}
+    </li>
+    <li class="list-group-item">
+        <i class="fa fa-file-code-o"></i> {{ profile.application.displayPreset.name }}
+    </li>
+    <li class="list-group-item">
+        <i class="fa fa-file"></i> {{ profile.data.fn|slice(-40) }}
+    </li>
 </ul>

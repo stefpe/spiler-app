@@ -1,15 +1,11 @@
-<div class="row expanded">
-    <div class="small-12 columns">
-        <ul class="menu">
-            <li {% if type == 'timeline' %}class="active"{% endif %}>
-                <a href="{{ path('profile_show', {'id': profile.id}) }}"><i class="fa fa-clock-o"></i>Timeline</a>
-            </li>
-            <li {% if type == 'flowgraph' %}class="active"{% endif %}>
-                <a href="{{ path('profile_show', {'id': profile.id, 'type': 'flowgraph'}) }}"><i class="fa fa-list"></i>Flowgraph</a>
-            </li>
-            <li {% if type == 'upsdowns' %}class="active"{% endif %}>
-                <a href="{{ path('profile_show', {'id': profile.id, 'type': 'upsdowns'}) }}"><i class="fa fa-star-half-o"></i>Ups&amp;Downs</a>
-            </li>
-        </ul>
-    </div>
-</div>
+<ul class="profile--navigation float-left nav nav-pills">
+    <li class="nav-item">
+        <a class="nav-link{% if type == 'timeline' %} active{% endif %}" href="{{ path('profile_show', {'id': profile.id}) }}"><i class="fa fa-clock-o"></i>Timeline</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link{% if type == 'flowgraph' %} active{% endif %}" href="{{ path('profile_show', {'id': profile.id, 'type': 'flowgraph'}) }}"><i class="fa fa-list"></i>Flowgraph</a>
+    </li>
+    {#<li class="nav-item">#}
+        {#<a class="nav-link{% if type == 'upsdowns' %} active{% endif %}" href="{{ path('profile_show', {'id': profile.id, 'type': 'upsdowns'}) }}"><i class="fa fa-star-half-o"></i>Ups&amp;Downs</a>#}
+    {#</li>#}
+</ul>

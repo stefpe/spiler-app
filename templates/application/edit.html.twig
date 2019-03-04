@@ -1,16 +1,16 @@
-{% extends 'AppBundle:dashboard:index.html.twig' %}
+{% extends 'dashboard/index.html.twig' %}
 
 {% block dashboard_body %}
 
-    {% include '@App/dashboard/content/header.html.twig' with {
+    {% include 'dashboard/content/header.html.twig' with {
         'title': 'Applications', 'icon':'rocket', 'description': 'Manage your application'
     } %}
 
-    {% include '@App/dashboard/content/form_panel.html.twig' with {
+    {% include 'dashboard/content/form_panel.html.twig' with {
         'title': 'Edit Application',
         'buttonTitle': 'Save',
         'topActions': [
-            {'key':' Back', 'path': 'apps_index', 'icon': 'arrow-left'}
+            {'key':' Back', 'path': 'backend_apps_index', 'icon': 'arrow-left'}
         ],
         'actionButtons': [
             {'title': 'Delete', 'path': path('apps_delete', {'id': application.id})}

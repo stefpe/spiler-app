@@ -68,7 +68,7 @@ class ApplicationController extends AbstractController
      */
     public function editAction(Request $request, Application $application)
     {
-        $editForm = $this->createForm('AppBundle\Form\ApplicationType', $application);
+        $editForm = $this->createForm('App\Form\ApplicationType', $application);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
@@ -77,7 +77,7 @@ class ApplicationController extends AbstractController
             return $this->redirectToRoute('apps_edit', array('id' => $application->getId()));
         }
 
-        return $this->render('AppBundle:application:edit.html.twig', array(
+        return $this->render('application/edit.html.twig', array(
             'application' => $application,
             'form' => $editForm->createView()
         ));

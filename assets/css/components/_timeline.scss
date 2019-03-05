@@ -1,0 +1,150 @@
+.timeline__legend {
+  padding-top: 13px;
+}
+
+.timeline--detail-box{
+  z-index:10000;
+  display:none;
+  position:absolute;
+  width:450px;
+  background-color:#292d2f;
+  color:#ffffff;
+  padding: 5px;
+  border: 1px solid #fff;
+  h5{
+    direction:rtl;
+    overflow:hidden;
+    text-overflow: ellipsis;
+    width:90%;
+    text-align: left;
+  }
+  .close-button{
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+}
+
+.vis-timeline .vis-center {
+  border-top: 1px solid #888D8E;
+  border-left: none;
+}
+
+.vis-timeline .vis-left {
+  border-color: transparent;
+  border-top: 1px solid #888D8E;
+  border-right: 1px solid #3f4649;
+  width: 230px;
+}
+
+.vis-timeline .vis-top {
+  border-left: none;
+}
+
+.vis-timeline .vis-content .vis-label {
+  border-color: #3f4649;
+  text-align: right;
+}
+
+.vis-timeline .vis-content .vis-group {
+  border-color: #424b4f;
+}
+
+.vis-timeline {
+  border: 1px solid #33393c;
+  font-size: 12pt;
+  /*background: #4b5357;*/
+}
+
+.vis-item {
+  border: 1px solid #3f4649;
+  background-color: #1779ba;
+  font-size: 16px;
+  color: #ffffff;
+}
+.vis-box{
+  height: 26px;
+  width: 8px;
+  margin-left: 4px;/*start point needs to be the left outer border*/
+}
+
+.vis-dot{
+  display: none;
+}
+.vis-line.vis-readonly{
+  display: none;
+}
+
+.vis-left .vis-label {
+  color: #ffffff;
+  border-bottom: 1px solid;
+  font-size: 0.75rem;
+  overflow: hidden;
+  -ms-text-overflow: ellipsis;
+  text-overflow: ellipsis;
+  direction: rtl;
+  line-height: 2.5;
+}
+
+.vis-labelset {
+  border-right: none;
+}
+
+.vis-item,
+.vis-item.vis-line {
+  border-width: 1px;
+}
+
+.vis-item.vis-dot {
+  border-width: 10px;
+  border-radius: 10px;
+}
+
+.vis-item.vis-selected {
+  border-color: green;
+  background-color: lightgreen;
+}
+
+.vis-time-axis .vis-text {
+  color: #ffffff;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+.vis-time-axis .vis-grid.vis-minor {
+  border-width: 1px;
+  border-color: #3F4649;
+}
+
+.timeline__actions{
+  width: 50px;
+}
+
+.framework{
+  background-color: #0a0a0a;
+}
+
+.event{
+  background-color: #ffae00;
+}
+
+.rendering{
+  background-color: #3adb76;
+}
+
+.database{
+  background-color: #cc4b37;
+}
+
+.controller{
+  background-color: #87CBE6;
+}
+
+.timeline__legend{
+  margin-right: 80px;
+  margin-bottom: 5px;
+}
+
+.timeline__legend-name{
+  margin-right: 15px;
+}

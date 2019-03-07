@@ -6,27 +6,37 @@
 {% endblock %}
 
 {% block post_navigation %}
-    <div class="clearfix timeline__legend">
-        <div class="float-right">
-            <div class="framework float-left" style="width:20px; height: 20px;"></div>
-            <div class="float-left timeline__legend-name">&nbsp;Framework</div>
-            <div class="event float-left" style="width:20px; height: 20px;"></div>
-            <div class="float-left timeline__legend-name">&nbsp;Event</div>
-            <div class="rendering float-left" style="width:20px; height: 20px;"></div>
-            <div class="float-left timeline__legend-name">&nbsp;Rendering</div>
-            <div class="controller float-left" style="width:20px; height: 20px;"></div>
-            <div class="float-left timeline__legend-name">&nbsp;Controller</div>
-            <div class="database float-left" style="width:20px; height: 20px;"></div>
-            <div class="float-left timeline__legend-name">&nbsp;Database</div>
-        </div>
+    <div class="clearfix">
+        <ul class="nav float-right">
+            <li class="nav-item">
+                <div class="framework timeline--legend-color" style="width:20px; height: 20px;"></div>
+                <div class="timeline--legend-name">&nbsp;Framework</div>
+            </li>
+            <li class="nav-item">
+                <div class="event timeline--legend-color" style="width:20px; height: 20px;"></div>
+                <div class="timeline--legend-name">&nbsp;Event</div>
+            </li>
+            <li class="nav-item">
+                <div class="rendering timeline--legend-color" style="width:20px; height: 20px;"></div>
+                <div class="timeline--legend-name">&nbsp;Rendering</div>
+            </li>
+            <li class="nav-item">
+                <div class="controller timeline--legend-color" style="width:20px; height: 20px;"></div>
+                <div class="timeline--legend-name">&nbsp;Controller</div>
+            </li>
+            <li class="nav-item">
+                <div class="database timeline--legend-color" style="width:20px; height: 20px;"></div>
+                <div class="timeline--legend-name">&nbsp;Database</div>
+            </li>
+        </ul>
     </div>
 {% endblock %}
 
 {% block pre_visualization %}
-    <div class="small button-group float-right stacked timeline__actions">
-        <a class="button" id="zoomIn"><i class="fa fa-search-plus"></i></a>
-        <a class="button" id="zoomOut"><i class="fa fa-search-minus"></i></a>
-        <a class="button" id="timelineFocus"><i class="fa fa-crosshairs"></i></a>
+    <div class="btn-group-vertical float-right">
+        <a class="btn btn-primary" id="zoomIn"><i class="fa fa-search-plus"></i></a>
+        <a class="btn btn-primary" id="zoomOut"><i class="fa fa-search-minus"></i></a>
+        <a class="btn btn-primary" id="timelineFocus"><i class="fa fa-crosshairs"></i></a>
     </div>
 {% endblock %}
 
@@ -41,22 +51,22 @@
          * Format milliseconds for timeline.
          *
          */
-        function getFormattedTime(milli){
+        function getFormattedTime(milli) {
             return moment(milli).format('YYYY-MM-DDTHH:mm:ss.SSS');
         }
 
-        function getRelativeTime(mics){
-            return (mics - timeBase)/1000 + ' ms';
+        function getRelativeTime(mics) {
+            return (mics - timeBase) / 1000 + ' ms';
         }
 
-        function getTableDetails(data){
-            if(!data.hasOwnProperty('detail_info')){
+        function getTableDetails(data) {
+            if (!data.hasOwnProperty('detail_info')) {
                 return '';
             }
 
             var result = '';
-            for(var i in data.detail_info){
-                result += '<tr><td>'+i+'</td><td>'+data.detail_info[i]+'</td></tr>';
+            for (var i in data.detail_info) {
+                result += '<tr><td>' + i + '</td><td>' + data.detail_info[i] + '</td></tr>';
             }
 
             return result;
@@ -72,16 +82,16 @@
          */
         function createTimelineItem(id, startTime, stopTime, data) {
 
-            if(timeBase === -1){
+            if (timeBase === -1) {
                 timeBase = startTime;
             }
 
-            startTime = (startTime - timeBase)/1000;
-            stopTime = (stopTime - timeBase)/1000;
+            startTime = (startTime - timeBase) / 1000;
+            stopTime = (stopTime - timeBase) / 1000;
 
             var diff = stopTime - startTime;
             var itemDisplayType = 'range';
-            if(diff < 5){
+            if (diff < 5) {
                 itemDisplayType = 'box';
             }
 
@@ -123,7 +133,7 @@
                 data.cs[i - 1]
             );
             //add new group
-            if(!groupIdHashmap.hasOwnProperty(functionName)){
+            if (!groupIdHashmap.hasOwnProperty(functionName)) {
                 groupIdHashmap[functionName] = i;
                 groups.add([
                     {
@@ -181,7 +191,7 @@
 
         //show details on click
         timeline.on('click', function (properties) {
-            if(properties.item === null ||properties.item === 0){
+            if (properties.item === null || properties.item === 0) {
                 detailsBox.style.display = 'none';
                 return;
             }
@@ -189,31 +199,31 @@
             var func = items.get(properties.item);
             detailsBox.style.display = 'block';
 
-            detailsBox.innerHTML = '<h5>'+
-                func.data.fc+'</h5>\n' +
+            detailsBox.innerHTML = '<h5>' +
+                func.data.fc + '</h5>\n' +
                 '<table class="table">\n' +
                 '<thead>\n' +
                 '</thead>\n' +
                 '<tbody>\n' +
                 '<tr>\n' +
                 '<td>Memory usage</td>\n' +
-                '<td>'+formatMemory(func.data.mu)+'</td>\n' +
+                '<td>' + formatMemory(func.data.mu) + '</td>\n' +
                 '</tr>\n' +
                 '<tr>\n' +
                 '<td>Wall time</td>\n' +
-                '<td>'+diffTime(func.data)+' ms</td>\n' +
+                '<td>' + diffTime(func.data) + ' ms</td>\n' +
                 '</tr>\n' + getTableDetails(func.data) +
                 '<tr>\n' +
                 '<td>Start time</td>\n' +
-                '<td>'+getRelativeTime(func.data.st)+'</td>\n' +
+                '<td>' + getRelativeTime(func.data.st) + '</td>\n' +
                 '</tr>\n' +
                 '<tr>\n' +
                 '<td>Stop time</td>\n' +
-                '<td>'+getRelativeTime(func.data.et)+'</td>\n' +
+                '<td>' + getRelativeTime(func.data.et) + '</td>\n' +
                 '</tr>\n' +
                 '</tbody>\n' +
                 '</table>\n' +
-                '  <button onclick="this.parentElement.style.display=\'none\';" class="close-button" aria-label="Dismiss alert" type="button" data-close>\n' +
+                '  <button onclick="this.parentElement.style.display=\'none\';" class="close-button btn" aria-label="Dismiss alert" type="button" data-close>\n' +
                 '    <span aria-hidden="true">&times;</span>\n' +
                 '  </button>';
         });
@@ -225,7 +235,7 @@
         document.getElementById('zoomOut').onclick = function () {
             timeline.zoomOut(0.5);
         };
-        document.getElementById('timelineFocus').onclick = function(){
+        document.getElementById('timelineFocus').onclick = function () {
             timeline.fit();
         };
     </script>

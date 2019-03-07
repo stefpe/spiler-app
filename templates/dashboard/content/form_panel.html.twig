@@ -1,35 +1,32 @@
 <div class="panel">
-    <div class="panel-heading">
-
+    <div class="panel--heading">
         <div class="clearfix">
             <h3 class="panel-title float-left">{{ title }}</h3>
             <div class="float-right">
                 {% if topActions is defined %}
                     {% for topAction in topActions %}
-                        <a class="button small" href="{{ path(topAction.path) }}">
-                            <span class="fa fa-{{ topAction.icon }}">{{ topAction.key }}</span>
+                        <a class="btn btn-info" href="{{ path(topAction.path) }}">
+                            <span class="fa fa-{{ topAction.icon }}"></span>{{ topAction.key }}
                         </a>
                     {% endfor %}
                 {% endif %}
             </div>
         </div>
     </div>
-    <div class="panel-body">
+    <div class="panel--body">
         {{ form_start(form) }}
         {{ form_widget(form) }}
         <div class="clearfix">
-            <input class="button float-left" type="submit" value="{{ buttonTitle }}"/>
+            <input class="btn btn-primary float-left" type="submit" value="{{ buttonTitle }}"/>
             {% if actionButtons is defined %}
-            <div class="float-right">
                 {% for actionButton in actionButtons %}
-                    <a class="button" href="{{ actionButton.path }}">{{ actionButton.title }}</a>
+                    <a class="float-right {{ actionButton.class }}" href="{{ actionButton.path }}">{{ actionButton.title }}</a>
                 {% endfor %}
-            </div>
             {% endif %}
         </div>
         {{ form_end(form) }}
     </div>
     {% if footer is defined %}
-        <div class="panel-footer">{{ footer }}</div>
+        <div class="panel--footer">{{ footer }}</div>
     {% endif %}
 </div>

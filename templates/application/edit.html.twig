@@ -13,7 +13,7 @@
             {'key':' Back', 'path': 'backend_apps_index', 'icon': 'arrow-left'}
         ],
         'actionButtons': [
-            {'title': 'Delete', 'path': path('apps_delete', {'id': application.id})}
+            {'title': 'Delete', 'path': path('apps_delete',{'id': application.id}), 'class': 'btn btn-danger'}
         ]
     } %}
 {% endblock %}

@@ -116,10 +116,6 @@
   border-color: #3F4649;
 }
 
-.timeline__actions{
-  width: 50px;
-}
-
 .framework{
   background-color: #0a0a0a;
 }
@@ -139,12 +135,12 @@
 .controller{
   background-color: #87CBE6;
 }
-
-.timeline__legend{
-  margin-right: 80px;
-  margin-bottom: 5px;
+.timeline--legend-color{
+  border-radius: 3px;
+  float: left;
+  margin-top: 2px;
 }
-
-.timeline__legend-name{
+.timeline--legend-name{
   margin-right: 15px;
+  float: left;
 }

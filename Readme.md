@@ -3,11 +3,7 @@
 ## Manage profiles of your tracked applications
 
 
-
-
-
-
-
+![Timeline](docs/spiler_timeline.png?raw=true "Timeline")
 
 
 

@@ -7,13 +7,13 @@
 
 
 
-#Installation
+# Installation
 ### Create schema ````php bin/console doctrine:schema:create````
 ### Seed Fixtures ```php bin/console doctrine:fixtures:load```
 
 
 
-#Development
+# Development
 
 
-###Create fixture classes: ```php bin/console make:fixture```
+### Create fixture classes: ```php bin/console make:fixture```
